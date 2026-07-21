@@ -1,0 +1,7 @@
+.arabic {
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  font-size: 13px;
+  text-transform: uppercase;
+  font-family: Inter, sans-serif;
+}
