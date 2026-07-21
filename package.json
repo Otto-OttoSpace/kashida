@@ -1,0 +1,18 @@
+{
+  "name": "arabitype",
+  "version": "0.1.0",
+  "description": "Catch the Arabic-typography mistakes that break Arabic rendering — letter-spacing, tight line-height, tiny sizes, uppercase, Latin-only fonts. Part of Otto.",
+  "bin": {
+    "arabitype": "bin/arabitype.js",
+    "arabitype-mcp": "mcp/arabitype-mcp.js"
+  },
+  "type": "commonjs",
+  "keywords": ["arabic", "typography", "rtl", "i18n", "tashkeel", "fonts", "linter", "ai", "cursor"],
+  "author": "Othmane Morad",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/moradothmanepro-OTTO/arabitype.git" },
+  "homepage": "https://arabitype.ottospace.co",
+  "engines": { "node": ">=16" },
+  "files": ["bin", "mcp", "README.md"],
+  "publishConfig": { "access": "public" }
+}

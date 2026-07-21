@@ -1,0 +1,15 @@
+name: 'arabitype'
+description: 'Catch the Arabic-typography mistakes that break Arabic rendering'
+author: 'Othmane Morad'
+branding:
+  icon: 'type'
+  color: 'purple'
+inputs:
+  path:
+    description: 'File or directory to scan'
+    default: '.'
+runs:
+  using: 'composite'
+  steps:
+    - shell: bash
+      run: node "${{ github.action_path }}/bin/arabitype.js" "${{ inputs.path }}"

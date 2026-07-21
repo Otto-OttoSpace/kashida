@@ -1,0 +1,19 @@
+# arabitype
+
+> Catch the Arabic-typography mistakes that break Arabic rendering.
+
+arabitype is a zero-dependency CLI + MCP server (part of Otto, dev.ottospace.co) that flags the
+Arabic-typography errors AI codegen and Latin-default styling produce: letter-spacing / Tailwind
+tracking on Arabic (shatters ligatures), tight line-height (crushes tashkeel), tiny sizes,
+text-transform: uppercase (meaningless on Arabic), and Latin-only font stacks.
+
+## Use it
+- CLI: `npx github:moradothmanepro-OTTO/arabitype .`
+- MCP: run `arabitype-mcp` (tools: arabitype_scan, arabitype_check_code)
+- AI rules: `arabitype --init-rules` writes ARABIC-TYPE-RULES.md
+
+## Rules for agents
+No letter-spacing/tracking on Arabic; line-height ≥ 1.5; body Arabic ≥ 16px; no uppercase on
+Arabic; use an Arabic font with a fallback (Cairo / IBM Plex Sans Arabic).
+
+Links: https://github.com/moradothmanepro-OTTO/arabitype · https://dev.ottospace.co
