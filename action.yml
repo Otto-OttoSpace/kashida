@@ -1,5 +1,5 @@
-name: 'arabitype'
-description: 'Catch the Arabic-typography mistakes that break Arabic rendering'
+name: 'kashida'
+description: 'Catch the Arabic-typography mistakes that break Arabic rendering (report-only)'
 author: 'Othmane Morad'
 branding:
   icon: 'type'
@@ -8,8 +8,14 @@ inputs:
   path:
     description: 'File or directory to scan'
     default: '.'
+  check:
+    description: 'Fail the job (exit non-zero) if any Arabic-typography issue is found'
+    default: 'false'
 runs:
   using: 'composite'
   steps:
     - shell: bash
-      run: node "${{ github.action_path }}/bin/arabitype.js" "${{ inputs.path }}"
+      run: |
+        FLAG=""
+        if [ "${{ inputs.check }}" = "true" ]; then FLAG="--check"; fi
+        node "${{ github.action_path }}/bin/kashida.js" "${{ inputs.path }}" $FLAG

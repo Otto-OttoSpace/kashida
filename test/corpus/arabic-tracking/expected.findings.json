@@ -1,0 +1,30 @@
+[
+  {
+    "rule": "letter-spacing",
+    "sev": "flag",
+    "line": 3,
+    "from": "tracking-wide",
+    "to": ""
+  },
+  {
+    "rule": "small-size",
+    "sev": "flag",
+    "line": 3,
+    "from": "text-sm",
+    "to": ""
+  },
+  {
+    "rule": "tight-leading",
+    "sev": "flag",
+    "line": 3,
+    "from": "leading-tight",
+    "to": ""
+  },
+  {
+    "rule": "uppercase",
+    "sev": "flag",
+    "line": 3,
+    "from": "uppercase",
+    "to": ""
+  }
+]

@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>arabitype — catch the Arabic-typography bugs AI code makes</title>
-<meta name="description" content="Arabic is cursive and carries diacritics. Latin-default styling breaks it: letter-spacing shatters ligatures, tight line-height crushes tashkeel. arabitype flags it. Part of Otto.">
-<link rel="canonical" href="https://arabitype.ottospace.co/">
+<title>kashida — catch the Arabic-typography bugs AI code makes</title>
+<meta name="description" content="Arabic is cursive and carries diacritics. Latin-default styling breaks it: letter-spacing shatters ligatures, tight line-height crushes tashkeel. kashida flags it — but only where Arabic is actually present. Part of Otto.">
+<link rel="canonical" href="https://kashida.ottospace.co/">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareApplication","name":"arabitype","applicationCategory":"DeveloperApplication","operatingSystem":"Node.js","offers":{"@type":"Offer","price":"0"},"description":"Catch the Arabic-typography mistakes that break Arabic rendering.","isPartOf":{"@type":"Organization","name":"Otto","url":"https://dev.ottospace.co"}}
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"kashida","alternateName":"arabitype","applicationCategory":"DeveloperApplication","operatingSystem":"Node.js","offers":{"@type":"Offer","price":"0"},"description":"Catch the Arabic-typography mistakes that break Arabic rendering — only where Arabic is actually present.","isPartOf":{"@type":"Organization","name":"Otto","url":"https://dev.ottospace.co"}}
 </script>
 <style>
   :root{--bg:#0d1117;--panel:#161b22;--fg:#e6edf3;--mut:#8b949e;--pur:#bc8cff;--blue:#58a6ff;--line:#21262d}
@@ -38,12 +38,12 @@
 <body>
 <div class="wrap">
   <header>
-    <div class="logo">arabitype</div>
+    <div class="logo">kashida &nbsp;·&nbsp; <span style="opacity:.6">formerly arabitype</span></div>
     <h1>AI styles Arabic like it's Latin. <span class="ar">العربية</span> breaks.</h1>
-    <p class="sub">Arabic is connected and cursive, and it carries diacritics. So <code>letter-spacing</code> shatters its ligatures, tight <code>line-height</code> crushes the tashkeel, <code>uppercase</code> is meaningless, and Latin-only fonts render it ugly. <b>arabitype</b> catches all of it.</p>
-    <div class="cmd"><span style="color:var(--mut)">$</span>&nbsp;npx <b>arabitype</b> .</div>
+    <p class="sub">Arabic is connected and cursive, and it carries diacritics. So <code>letter-spacing</code> shatters its ligatures, tight <code>line-height</code> crushes the tashkeel, <code>uppercase</code> is meaningless, and Latin-only fonts render it ugly. <b>kashida</b> catches all of it — and <b>only where Arabic is actually present</b>, so a pure-Latin file reports nothing.</p>
+    <div class="cmd"><span style="color:var(--mut)">$</span>&nbsp;npx <b>kashida</b> .</div>
     <div class="btns">
-      <a class="btn p" href="https://github.com/moradothmanepro-OTTO/arabitype">View on GitHub →</a>
+      <a class="btn p" href="https://github.com/moradothmanepro-OTTO/kashida">View on GitHub →</a>
       <a class="btn s" href="https://dev.ottospace.co">More Otto tools</a>
     </div>
     <div class="demo">
@@ -51,20 +51,29 @@
     </div>
   </header>
   <section>
-    <h2>What it catches</h2>
+    <h2>What it catches (in Arabic context)</h2>
     <ul>
       <li><b><code>letter-spacing</code> / Tailwind <code>tracking-*</code></b> on Arabic → shatters ligatures</li>
       <li><b>Tight <code>line-height</code></b> (<code>leading-none/tight/snug</code>, &lt; 1.5) → crushes tashkeel</li>
       <li><b>Small sizes</b> (<code>text-xs/text-sm</code>, &lt; 16px) → Arabic body too small</li>
       <li><b><code>text-transform: uppercase</code></b> → meaningless on Arabic, hides bugs</li>
-      <li><b>Latin-only font stacks</b> → add an Arabic family fallback</li>
+      <li><b>Latin-only font stacks</b> → flagged via an Arabic-font allowlist (<code>Inter, Cairo</code> is clean)</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Parser-verified, not regex</h2>
+    <ul>
+      <li>Gated on a real Arabic signal — <b>Arabic glyphs</b>, <code>lang="ar"</code>/<code>dir="rtl"</code>, or an <code>.arabic</code>/<code>[lang=ar]</code> selector</li>
+      <li>Reads <b><code>cn()</code>/<code>clsx()</code>/<code>cva()</code>/template-literal</b> class composition</li>
+      <li>Reads <b>inline JSX <code>style={{…}}</code></b> objects and <b>arbitrary Tailwind</b> (<code>text-[13px]</code>, <code>leading-[1.2]</code>)</li>
+      <li>Report-only — it never edits your code. <code>// kashida-ignore</code> + <code>kashida.config.json</code> when you disagree</li>
     </ul>
   </section>
   <section>
     <h2>In your AI agent (MCP)</h2>
-    <pre>{ "mcpServers": { "arabitype": {
+    <pre>{ "mcpServers": { "kashida": {
   "command": "npx",
-  "args": ["-y","-p","github:moradothmanepro-OTTO/arabitype","arabitype-mcp"] } } }</pre>
+  "args": ["-y","-p","github:moradothmanepro-OTTO/kashida","kashida-mcp"] } } }</pre>
   </section>
   <footer>
     An <strong><a href="https://dev.ottospace.co">Otto</a></strong> tool · built by a native-Arabic Design Engineer · MIT

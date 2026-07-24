@@ -1,0 +1,30 @@
+[
+  {
+    "rule": "letter-spacing",
+    "sev": "flag",
+    "line": 3,
+    "from": "tracking-[0.1em]",
+    "to": ""
+  },
+  {
+    "rule": "small-size",
+    "sev": "flag",
+    "line": 3,
+    "from": "text-[0.8rem]",
+    "to": ""
+  },
+  {
+    "rule": "small-size",
+    "sev": "flag",
+    "line": 3,
+    "from": "text-[13px]",
+    "to": ""
+  },
+  {
+    "rule": "tight-leading",
+    "sev": "flag",
+    "line": 3,
+    "from": "leading-[1.2]",
+    "to": ""
+  }
+]

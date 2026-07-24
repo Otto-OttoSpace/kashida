@@ -1,4 +1,4 @@
-# AGENTS.md — Arabic typography rules for AI agents
+# AGENTS.md — Arabic typography rules for AI agents (kashida)
 
 When styling anything that can hold Arabic text:
 1. **Never** apply `letter-spacing` / Tailwind `tracking-*` to Arabic — it shatters the cursive joins & ligatures. Keep it `0`/`normal`.
@@ -7,4 +7,4 @@ When styling anything that can hold Arabic text:
 4. Never `text-transform: uppercase` on Arabic — it has no case; it does nothing and hides bugs.
 5. Use an Arabic-capable font with a real fallback (e.g. `"Cairo","IBM Plex Sans Arabic", system-ui`) — never a Latin-only stack for Arabic.
 
-Run `npx arabitype .` before finishing — it must report zero issues.
+Run `npx kashida .` before finishing — it must report zero Arabic-type issues. (kashida only flags where Arabic is actually present, so pure-Latin styling is left alone. Formerly `arabitype`.)
