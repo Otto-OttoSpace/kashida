@@ -1,18 +1,28 @@
 {
-  "name": "arabitype",
-  "version": "0.1.0",
-  "description": "Catch the Arabic-typography mistakes that break Arabic rendering — letter-spacing, tight line-height, tiny sizes, uppercase, Latin-only fonts. Part of Otto.",
+  "name": "kashida",
+  "version": "0.2.0",
+  "description": "Catch the Arabic-typography mistakes that break Arabic rendering — letter-spacing, tight line-height, tiny sizes, uppercase, Latin-only fonts — but only where Arabic is actually present. AST/PostCSS-verified, report-only, with an MCP server. Part of Otto.",
   "bin": {
-    "arabitype": "bin/arabitype.js",
-    "arabitype-mcp": "mcp/arabitype-mcp.js"
+    "kashida": "bin/kashida.js",
+    "arabitype": "bin/kashida.js",
+    "kashida-mcp": "mcp/kashida-mcp.js"
   },
   "type": "commonjs",
-  "keywords": ["arabic", "typography", "rtl", "i18n", "tashkeel", "fonts", "linter", "ai", "cursor"],
+  "scripts": {
+    "test": "node --test test/run.js"
+  },
+  "keywords": ["arabic", "typography", "rtl", "i18n", "tashkeel", "fonts", "linter", "ai", "cursor", "claude", "arabitype"],
   "author": "Othmane Morad",
   "license": "MIT",
-  "repository": { "type": "git", "url": "git+https://github.com/moradothmanepro-OTTO/arabitype.git" },
-  "homepage": "https://arabitype.ottospace.co",
-  "engines": { "node": ">=16" },
-  "files": ["bin", "mcp", "README.md"],
-  "publishConfig": { "access": "public" }
+  "repository": { "type": "git", "url": "git+https://github.com/moradothmanepro-OTTO/kashida.git" },
+  "homepage": "https://kashida.ottospace.co",
+  "bugs": { "url": "https://github.com/moradothmanepro-OTTO/kashida/issues" },
+  "engines": { "node": ">=18" },
+  "files": ["bin", "lib", "mcp", "action.yml", "README.md"],
+  "publishConfig": { "access": "public" },
+  "dependencies": {
+    "@babel/parser": "^8.0.4",
+    "@babel/traverse": "^8.0.4",
+    "postcss": "^8.5.23"
+  }
 }

@@ -1,19 +1,24 @@
-# arabitype
+# kashida
 
-> Catch the Arabic-typography mistakes that break Arabic rendering.
+> Catch the Arabic-typography mistakes that break Arabic rendering — but only where Arabic is actually present.
 
-arabitype is a zero-dependency CLI + MCP server (part of Otto, dev.ottospace.co) that flags the
+kashida (formerly arabitype) is a CLI + MCP server (part of Otto, dev.ottospace.co) that flags the
 Arabic-typography errors AI codegen and Latin-default styling produce: letter-spacing / Tailwind
 tracking on Arabic (shatters ligatures), tight line-height (crushes tashkeel), tiny sizes,
-text-transform: uppercase (meaningless on Arabic), and Latin-only font stacks.
+text-transform: uppercase (meaningless on Arabic), and Latin-only font stacks. Every check is gated
+on an Arabic signal — Arabic-script codepoints, lang="ar"/dir="rtl" ancestry, or an .arabic/[lang=ar]
+selector — so a pure-Latin file reports zero issues. Detection is parser-verified (Babel for
+JS/TS/JSX/TSX, PostCSS for CSS): it reads cn()/clsx()/cva()/template-literal class composition,
+inline JSX style objects, and arbitrary Tailwind values (text-[13px], leading-[1.2], tracking-[0.1em]).
+It reports only — it never edits, because typography is judgment.
 
 ## Use it
-- CLI: `npx github:moradothmanepro-OTTO/arabitype .`
-- MCP: run `arabitype-mcp` (tools: arabitype_scan, arabitype_check_code)
-- AI rules: `arabitype --init-rules` writes ARABIC-TYPE-RULES.md
+- CLI: `npx github:moradothmanepro-OTTO/kashida .`
+- MCP: run `kashida-mcp` (tools: kashida_scan, kashida_check_code)
+- AI rules: `kashida --init-rules` writes ARABIC-TYPE-RULES.md
 
 ## Rules for agents
 No letter-spacing/tracking on Arabic; line-height ≥ 1.5; body Arabic ≥ 16px; no uppercase on
 Arabic; use an Arabic font with a fallback (Cairo / IBM Plex Sans Arabic).
 
-Links: https://github.com/moradothmanepro-OTTO/arabitype · https://dev.ottospace.co
+Links: https://github.com/moradothmanepro-OTTO/kashida · https://dev.ottospace.co

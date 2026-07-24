@@ -1,17 +1,17 @@
 #!/usr/bin/env node
 'use strict';
 /*
- * arabitype MCP server — lets AI agents catch Arabic-typography mistakes by calling
- * arabitype over the Model Context Protocol (stdio, newline-delimited JSON-RPC). Zero deps.
- * Part of Otto · dev.ottospace.co
+ * kashida MCP server — lets AI agents (Cursor / Claude / Windsurf) catch
+ * Arabic-typography mistakes by calling kashida over the Model Context Protocol.
+ * Transport: stdio, newline-delimited JSON-RPC 2.0. (Formerly arabitype.)
  */
 const { execFileSync } = require('child_process');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
-const CLI = path.join(__dirname, '..', 'bin', 'arabitype.js');
-const VERSION = '0.1.0';
+const CLI = path.join(__dirname, '..', 'bin', 'kashida.js');
+const VERSION = require('../package.json').version;
 const PROTOCOL = '2025-06-18';
 
 function runCli(args) {
@@ -20,17 +20,26 @@ function runCli(args) {
 }
 
 const TOOLS = [
-  { name: 'arabitype_scan', description: 'Scan a file or directory for Arabic-typography mistakes (letter-spacing/tracking on Arabic, tight line-height that crushes tashkeel, tiny font sizes, uppercase, Latin-only fonts). Returns JSON findings.',
-    inputSchema: { type: 'object', properties: { path: { type: 'string' } }, required: ['path'] } },
-  { name: 'arabitype_check_code', description: 'Check a CSS/JSX snippet for Arabic-typography mistakes before you ship Arabic UI.',
-    inputSchema: { type: 'object', properties: { code: { type: 'string' }, ext: { type: 'string', description: 'e.g. .tsx or .css (default .tsx)' } }, required: ['code'] } }
+  {
+    name: 'kashida_scan',
+    description: 'Scan a file or directory for Arabic-typography mistakes — but only where Arabic is actually present (Arabic glyphs, lang="ar"/dir="rtl", or an .arabic/[lang=ar] selector). Catches letter-spacing/tracking (shatters ligatures), tight line-height (crushes tashkeel), tiny font sizes, uppercase, and Latin-only fonts. Report-only. Returns JSON findings.',
+    inputSchema: { type: 'object', properties: { path: { type: 'string', description: 'File or directory to scan' } }, required: ['path'] }
+  },
+  {
+    name: 'kashida_check_code',
+    description: 'Check a CSS/JSX/TSX snippet for Arabic-typography mistakes before you ship Arabic UI. Returns JSON findings (nothing is auto-edited — typography is judgment).',
+    inputSchema: { type: 'object', properties: {
+      code: { type: 'string', description: 'The code snippet' },
+      ext: { type: 'string', description: 'File extension for context, e.g. .tsx or .css (default .tsx)' }
+    }, required: ['code'] }
+  }
 ];
 
 function callTool(name, args) {
-  if (name === 'arabitype_scan') return runCli([args.path, '--json']);
-  if (name === 'arabitype_check_code') {
+  if (name === 'kashida_scan') return runCli([args.path, '--json']);
+  if (name === 'kashida_check_code') {
     const ext = args.ext && args.ext.startsWith('.') ? args.ext : '.tsx';
-    const tmp = path.join(os.tmpdir(), `arabitype-${Date.now()}-${Math.floor(Math.random() * 1e6)}${ext}`);
+    const tmp = path.join(os.tmpdir(), `kashida-${Date.now()}-${Math.floor(Math.random() * 1e6)}${ext}`);
     fs.writeFileSync(tmp, args.code);
     const out = runCli([tmp, '--json']);
     try { fs.unlinkSync(tmp); } catch {}
@@ -42,7 +51,7 @@ function callTool(name, args) {
 function send(msg) { process.stdout.write(JSON.stringify(msg) + '\n'); }
 function handle(msg) {
   const { id, method, params } = msg;
-  if (method === 'initialize') return send({ jsonrpc: '2.0', id, result: { protocolVersion: PROTOCOL, capabilities: { tools: {} }, serverInfo: { name: 'arabitype', version: VERSION } } });
+  if (method === 'initialize') return send({ jsonrpc: '2.0', id, result: { protocolVersion: PROTOCOL, capabilities: { tools: {} }, serverInfo: { name: 'kashida', version: VERSION } } });
   if (method === 'notifications/initialized' || method === 'initialized') return;
   if (method === 'ping') return send({ jsonrpc: '2.0', id, result: {} });
   if (method === 'tools/list') return send({ jsonrpc: '2.0', id, result: { tools: TOOLS } });
@@ -64,4 +73,4 @@ process.stdin.on('data', d => {
     handle(msg);
   }
 });
-process.stderr.write(`arabitype MCP server v${VERSION} ready\n`);
+process.stderr.write(`kashida MCP server v${VERSION} ready\n`);

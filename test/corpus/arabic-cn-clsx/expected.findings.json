@@ -1,0 +1,23 @@
+[
+  {
+    "rule": "letter-spacing",
+    "sev": "flag",
+    "line": 6,
+    "from": "tracking-wide",
+    "to": ""
+  },
+  {
+    "rule": "small-size",
+    "sev": "flag",
+    "line": 6,
+    "from": "text-sm",
+    "to": ""
+  },
+  {
+    "rule": "tight-leading",
+    "sev": "flag",
+    "line": 6,
+    "from": "leading-tight",
+    "to": ""
+  }
+]

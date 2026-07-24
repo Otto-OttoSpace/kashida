@@ -1,0 +1,23 @@
+[
+  {
+    "rule": "latin-font-stack",
+    "sev": "flag",
+    "line": 3,
+    "from": "Inter",
+    "to": ""
+  },
+  {
+    "rule": "letter-spacing",
+    "sev": "flag",
+    "line": 3,
+    "from": "letterSpacing: 0.1em",
+    "to": ""
+  },
+  {
+    "rule": "small-size",
+    "sev": "flag",
+    "line": 3,
+    "from": "fontSize: 13",
+    "to": ""
+  }
+]

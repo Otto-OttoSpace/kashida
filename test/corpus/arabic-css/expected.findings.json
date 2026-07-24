@@ -1,0 +1,37 @@
+[
+  {
+    "rule": "letter-spacing",
+    "sev": "flag",
+    "line": 2,
+    "from": "letter-spacing: 0.05em",
+    "to": ""
+  },
+  {
+    "rule": "tight-leading",
+    "sev": "flag",
+    "line": 3,
+    "from": "line-height: 1.2",
+    "to": ""
+  },
+  {
+    "rule": "small-size",
+    "sev": "flag",
+    "line": 4,
+    "from": "font-size: 13px",
+    "to": ""
+  },
+  {
+    "rule": "uppercase",
+    "sev": "flag",
+    "line": 5,
+    "from": "text-transform: uppercase",
+    "to": ""
+  },
+  {
+    "rule": "latin-font-stack",
+    "sev": "flag",
+    "line": 6,
+    "from": "Inter, sans-serif",
+    "to": ""
+  }
+]

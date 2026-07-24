@@ -1,0 +1,9 @@
+[
+  {
+    "rule": "letter-spacing",
+    "sev": "flag",
+    "line": 4,
+    "from": "tracking-widest",
+    "to": ""
+  }
+]

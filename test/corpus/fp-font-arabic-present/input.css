@@ -1,0 +1,9 @@
+.arabic {
+  font-family: Inter, Cairo, sans-serif;
+}
+.ar {
+  font-family: "IBM Plex Sans Arabic", Inter, sans-serif;
+}
+[lang="ar"] {
+  font-family: "Noto Sans Arabic", Roboto;
+}
