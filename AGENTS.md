@@ -6,5 +6,6 @@ When styling anything that can hold Arabic text:
 3. Arabic body text ≥ 16px (avoid `text-xs`/`text-sm` for body).
 4. Never `text-transform: uppercase` on Arabic — it has no case; it does nothing and hides bugs.
 5. Use an Arabic-capable font with a real fallback (e.g. `"Cairo","IBM Plex Sans Arabic", system-ui`) — never a Latin-only stack for Arabic.
+6. **Never** split cursive/RTL text into per-character elements. GSAP SplitText `type:"chars"`, `.split('')` / `[...text].map(c => <span>)` wrap each Arabic letter in its own box, so it renders ISOLATED (disconnected) and the joins break. Split by **word or line** for RTL, or exclude cursive text from per-character animation.
 
 Run `npx kashida .` before finishing — it must report zero Arabic-type issues. (kashida only flags where Arabic is actually present, so pure-Latin styling is left alone. Formerly `arabitype`.)

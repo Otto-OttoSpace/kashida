@@ -1,0 +1,9 @@
+[
+  {
+    "rule": "cursive-perchar-split",
+    "sev": "flag",
+    "line": 6,
+    "from": "SplitText type:\"chars\"",
+    "to": ""
+  }
+]

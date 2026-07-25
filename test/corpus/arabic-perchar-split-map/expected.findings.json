@@ -1,0 +1,9 @@
+[
+  {
+    "rule": "cursive-perchar-split",
+    "sev": "flag",
+    "line": 4,
+    "from": ".split('').map(…)",
+    "to": ""
+  }
+]

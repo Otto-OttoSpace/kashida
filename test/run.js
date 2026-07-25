@@ -55,6 +55,44 @@ for (const name of cases) {
 }
 
 // ---------------------------------------------------------------------------
+// Live tier — cursive per-character split heuristic (render-cursive-split).
+// classifyCursiveSplit() is the exact logic the headless-Chromium DOM walker
+// runs, exported so we can unit-test it WITHOUT launching a browser. The
+// synthetic fixture is the trimmed text of an element's direct children.
+// ---------------------------------------------------------------------------
+const liveCore = require(path.join(ROOT, 'lib', 'live-core.js'));
+
+test('live: per-character Arabic split is detected + reconstructed', () => {
+  // <div class="split"><span>م</span><span>ر</span>… — SplitText type:'chars'
+  const r = liveCore.classifyCursiveSplit(['م', 'ر', 'ح', 'ب', 'ا']);
+  assert.strictEqual(r.split, true, 'per-glyph Arabic boxes must flag as a split');
+  assert.strictEqual(r.word, 'مرحبا', 'the joined run is reconstructed from the boxes');
+  assert.strictEqual(r.pieces, 5);
+});
+
+test('live: a single letter + tashkeel still counts as one box', () => {
+  // graphemes like "مَ" (beh + fatha) are one cursive letter, not two.
+  const r = liveCore.classifyCursiveSplit(['مَ', 'رْ', 'حَ', 'بَ']);
+  assert.strictEqual(r.split, true);
+  assert.strictEqual(r.pieces, 4);
+});
+
+test('live: word/line boxes are NOT a per-char split', () => {
+  assert.strictEqual(liveCore.classifyCursiveSplit(['مرحبا', 'بالعالم']).split, false);
+});
+
+test('live: Latin per-character boxes are NOT flagged (no false positive)', () => {
+  assert.strictEqual(liveCore.classifyCursiveSplit(['H', 'e', 'l', 'l', 'o']).split, false);
+});
+
+test('live: isSingleCursiveBox — one Arabic letter yes, a word no', () => {
+  assert.strictEqual(liveCore.isSingleCursiveBox('م'), true);
+  assert.strictEqual(liveCore.isSingleCursiveBox('مر'), false);
+  assert.strictEqual(liveCore.isSingleCursiveBox('م ر'), false); // whitespace → not a glyph box
+  assert.strictEqual(liveCore.isSingleCursiveBox('a'), false);
+});
+
+// ---------------------------------------------------------------------------
 // Shape tier (HarfBuzz ground truth). Optional dependency — these tests SKIP
 // (not fail) when harfbuzzjs isn't installed, so the default install stays green.
 // ---------------------------------------------------------------------------

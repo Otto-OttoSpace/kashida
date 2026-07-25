@@ -92,6 +92,7 @@ When styling anything that can hold Arabic / Indic / SE-Asian / CJK / Hebrew tex
 6. Never disable joining features (font-feature-settings "calt"/"rlig"/"liga"/"init"/"medi"/"fina" 0, font-variant-ligatures:none) on a cursive/complex script.
 7. Never unicode-bidi:*-override or writing-mode:vertical-* on RTL text.
 8. Don't leave a stray literal ZWNJ (U+200C) inside an Arabic word — it breaks the join.
+9. NEVER split cursive/RTL text into per-character elements. Text-animation splitters — GSAP SplitText \`type:"chars"\`, or \`.split('')\` / \`[...text].map(c => <span>)\` — put each Arabic letter in its own <span>/<div>, so it renders in the ISOLATED (disconnected) form and the joins break. For RTL/cursive, split by WORD or LINE instead, or exclude cursive text from per-character animation.
 
 Run \`npx kashida .\` before finishing — it must report zero issues. Add \`--render\` to prove the font actually shapes the text (no tofu / fake-Arabic).
 `;
