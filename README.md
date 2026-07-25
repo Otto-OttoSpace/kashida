@@ -1,17 +1,30 @@
 # kashida
 
-**Catch the Arabic-typography mistakes that quietly break Arabic rendering — but only where Arabic is actually in play.**
+**Catch the typography mistakes that quietly break COMPLEX-SCRIPT rendering — Arabic & the RTL-cursive family, Indic, SE-Asian, CJK, Hebrew — but only where such a script is actually in play.**
 
-> Formerly published as `arabitype`. Same tool, hardened: it now proves Arabic is present before it flags anything, so a pure-Latin file reports **zero** issues.
+> Formerly published as `arabitype`. Same tool, now **shaping-aware and multi-script**: it proves a complex script is present before it flags anything (a pure-Latin file reports **zero**), and it gates every rule *per family* — so Hebrew and CJK never get a false `letter-spacing` flag (they don't join), while Arabic and Indic do.
 
-Arabic (`كَشِيدَة` — the elongation stroke that connects its letters) is a connected, cursive script that carries diacritics (tashkeel). The Latin-default styling AI codegen produces *breaks* it: `letter-spacing` shatters the ligatures, tight `line-height` crushes the tashkeel, small sizes hurt legibility, `uppercase` is meaningless, and Latin-only fonts render Arabic in an ugly fallback. **kashida** flags all five — and *only* when the styled element actually involves Arabic.
+Arabic (`كَشِيدَة`) is a connected, cursive script with diacritics (tashkeel). The Latin-default styling AI codegen produces *breaks* it: `letter-spacing` shatters the joins, disabling `calt`/`rlig` kills the ligatures, tight `line-height` crushes the tashkeel, Latin-only fonts render it as tofu. **kashida** flags these — and *only* where the script that they break is present.
 
 ```bash
-npx kashida .              # report Arabic-typography issues
-npx kashida . --json       # machine-readable (CI)
-npx kashida . --check      # report only, exit non-zero if anything found (CI)
-npx kashida . --init-rules # write ARABIC-TYPE-RULES.md for your AI agent
+npx kashida .                       # static tier — report issues
+npx kashida . --json                # machine-readable (CI)
+npx kashida . --check               # exit non-zero if anything found (CI)
+npx kashida . --render              # + HarfBuzz: shape the text, prove no tofu / fake-Arabic-font
+npx kashida . --render --font f.ttf # shape against a specific font file
+npx kashida --url https://site/ar/  # live: headless Chromium inspects the RENDERED page
+npx kashida . --init-rules          # write typography rules for your AI agent
 ```
+
+## Three tiers
+
+1. **static** (default, zero heavy deps, never throws) — AST/PostCSS. Catches `letter-spacing`/`word-spacing`/`tracking-*`, tight `line-height`, tiny sizes, `uppercase`/`capitalize`, Latin-only fonts, **ligature-off** (`font-feature-settings "calt"/"liga"/"rlig"/"init"/"medi"/"fina" 0`, `font-variant-ligatures:none`), **bidi-override**, **vertical writing-mode** on RTL, and a **stray literal ZWNJ** inside a cursive word.
+2. **`--render`** (optional deps `harfbuzzjs` + `fontkit`) — HarfBuzz ground truth: shapes the text and reports **tofu** (a glyph shaped to `.notdef`), **fake-Arabic-font** (a face that does no Arabic joining — normal output == joining-disabled output), and **mark-collision** (a combining mark placed at `dx=0,dy=0`). Ships a bundled reference Arabic face (Amiri).
+3. **`--url`** (optional deps `playwright` + `wawoff2`) — render-time: launches Chromium, waits for webfonts, walks every visible text node, and uses CDP `CSS.getPlatformFontsForNode` to prove the **actual** face the browser used (a Latin family with `glyphCount>0` over Arabic = forced-Latin). Falls back to a curl+shape analysis when Playwright isn't installed.
+
+## Scripts it understands
+
+RTL-cursive **Arabic · Syriac · N'Ko · Adlam** (joining — spacing shatters), RTL non-cursive **Hebrew · Thaana** (bidi matters, spacing doesn't), Indic **Devanagari · Bengali · Gujarati · Tamil · Telugu** (spacing splits conjuncts), SE-Asian **Thai · Lao · Khmer · Myanmar** (no letter-spacing; line-break needs a segmenter), and **CJK** **Han · Hiragana · Katakana · Hangul** (no case; use text-spacing, mind kinsoku).
 
 ## What makes it accurate
 
@@ -53,7 +66,7 @@ Tools: `kashida_scan`, `kashida_check_code`.
 
 ## GitHub Action
 ```yaml
-- uses: moradothmanepro-OTTO/kashida@v0.2.0
+- uses: moradothmanepro-OTTO/kashida@v0.3.0
   with:
     path: .
     check: true   # fail the job on any Arabic-typography issue

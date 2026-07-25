@@ -1,0 +1,8 @@
+[lang="ar"] {
+  word-spacing: 4px;
+  font-feature-settings: "calt" 0, "liga" 0;
+  font-variant-ligatures: none;
+  unicode-bidi: bidi-override;
+  writing-mode: vertical-rl;
+  text-transform: capitalize;
+}

@@ -1,7 +1,7 @@
 {
   "name": "kashida",
-  "version": "0.2.0",
-  "description": "Catch the Arabic-typography mistakes that break Arabic rendering — letter-spacing, tight line-height, tiny sizes, uppercase, Latin-only fonts — but only where Arabic is actually present. AST/PostCSS-verified, report-only, with an MCP server. Part of Otto.",
+  "version": "0.3.0",
+  "description": "Catch the typography mistakes that break COMPLEX-SCRIPT rendering — Arabic & the RTL-cursive family, Indic, SE-Asian, CJK, Hebrew. Static AST/PostCSS tier (letter/word-spacing, tight leading, tiny size, uppercase, Latin-only fonts, ligature-off, bidi-override, stray ZWNJ), plus optional HarfBuzz `--render` (tofu / fake-Arabic-font / unattached marks) and a live `--url` Chromium tier. Per-family gating so Hebrew/CJK never get a false letter-spacing flag. Report-only, with an MCP server. Part of Otto.",
   "bin": {
     "kashida": "bin/kashida.js",
     "arabitype": "bin/kashida.js",
@@ -11,18 +11,58 @@
   "scripts": {
     "test": "node --test test/run.js"
   },
-  "keywords": ["arabic", "typography", "rtl", "i18n", "tashkeel", "fonts", "linter", "ai", "cursor", "claude", "arabitype"],
+  "keywords": [
+    "arabic",
+    "typography",
+    "rtl",
+    "i18n",
+    "tashkeel",
+    "fonts",
+    "linter",
+    "harfbuzz",
+    "shaping",
+    "scripts",
+    "indic",
+    "cjk",
+    "hebrew",
+    "ai",
+    "cursor",
+    "claude",
+    "arabitype"
+  ],
   "author": "Othmane Morad",
   "license": "MIT",
-  "repository": { "type": "git", "url": "git+https://github.com/moradothmanepro-OTTO/kashida.git" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moradothmanepro-OTTO/kashida.git"
+  },
   "homepage": "https://kashida.ottospace.co",
-  "bugs": { "url": "https://github.com/moradothmanepro-OTTO/kashida/issues" },
-  "engines": { "node": ">=18" },
-  "files": ["bin", "lib", "mcp", "action.yml", "README.md"],
-  "publishConfig": { "access": "public" },
+  "bugs": {
+    "url": "https://github.com/moradothmanepro-OTTO/kashida/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "mcp",
+    "assets",
+    "action.yml",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@babel/parser": "^8.0.4",
     "@babel/traverse": "^8.0.4",
     "postcss": "^8.5.23"
+  },
+  "optionalDependencies": {
+    "fontkit": "^2.0.4",
+    "harfbuzzjs": "^0.10.3",
+    "playwright": "^1.48.0",
+    "wawoff2": "^2.0.1"
   }
 }

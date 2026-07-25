@@ -53,3 +53,50 @@ for (const name of cases) {
     });
   }
 }
+
+// ---------------------------------------------------------------------------
+// Shape tier (HarfBuzz ground truth). Optional dependency — these tests SKIP
+// (not fail) when harfbuzzjs isn't installed, so the default install stays green.
+// ---------------------------------------------------------------------------
+let shapeCore = null;
+try { shapeCore = require(path.join(ROOT, 'lib', 'shape-core.js')); } catch { shapeCore = null; }
+
+test('shape: reference face is bundled', () => {
+  const bytes = shapeCore && shapeCore.referenceFontBytes();
+  assert.ok(bytes && bytes.length > 1000, 'assets/Amiri-Regular.ttf should be bundled');
+});
+
+test('shape: bundled Arabic face DOES join (not a fake-Arabic font)', async (t) => {
+  if (!shapeCore || !(await shapeCore.isAvailable())) return t.skip('harfbuzzjs not installed');
+  const j = await shapeCore.fontJoinsArabic(shapeCore.referenceFontBytes());
+  assert.strictEqual(j.tofu, false, 'reference face must render the join pair بب');
+  assert.strictEqual(j.joins, true, 'reference face must actually join Arabic');
+});
+
+test('shape: reference face over Arabic → no tofu, no mark collision', async (t) => {
+  if (!shapeCore || !(await shapeCore.isAvailable())) return t.skip('harfbuzzjs not installed');
+  const findings = await shapeCore.analyze(shapeCore.referenceFontBytes(), 'مَرْحَبًا بالعالم', { fontName: 'Amiri' });
+  assert.deepStrictEqual(findings, [], 'a real Arabic face must produce zero render findings on Arabic');
+});
+
+test('shape: render-tofu when a face lacks the script (Amiri over CJK)', async (t) => {
+  if (!shapeCore || !(await shapeCore.isAvailable())) return t.skip('harfbuzzjs not installed');
+  const findings = await shapeCore.analyze(shapeCore.referenceFontBytes(), '你好世界', { fontName: 'Amiri' });
+  assert.ok(findings.some(f => f.rule === 'render-tofu'), 'CJK text in an Arabic-only face must flag render-tofu');
+});
+
+test('shape: render-tofu + fake-Arabic-font when a LATIN font shapes Arabic', async (t) => {
+  if (!shapeCore || !(await shapeCore.isAvailable())) return t.skip('harfbuzzjs not installed');
+  // Prefer a bundled Latin-only fixture; else use a known Latin-only macOS system font.
+  const candidates = [
+    path.join(ROOT, 'test', 'fixtures', 'latin-only.ttf'),
+    '/System/Library/Fonts/Monaco.ttf',
+    '/System/Library/Fonts/Supplemental/Andale Mono.ttf',
+    '/System/Library/Fonts/Supplemental/Impact.ttf',
+  ];
+  const latin = candidates.find(p => { try { return fs.statSync(p).isFile(); } catch { return false; } });
+  if (!latin) return t.skip('no Latin-only font available on this machine');
+  const findings = await shapeCore.analyze(fs.readFileSync(latin), 'مرحبا', { fontName: path.basename(latin) });
+  assert.ok(findings.some(f => f.rule === 'render-tofu'), 'a Latin font shaping Arabic must flag render-tofu');
+  assert.ok(findings.some(f => f.rule === 'render-fake-arabic-font'), 'a Latin font shaping Arabic must flag render-fake-arabic-font');
+});
