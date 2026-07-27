@@ -64,5 +64,9 @@
     "harfbuzzjs": "^0.10.3",
     "playwright": "^1.48.0",
     "wawoff2": "^2.0.1"
+  },
+  "funding": {
+    "type": "polar",
+    "url": "https://polar.sh/otto-space"
   }
 }
