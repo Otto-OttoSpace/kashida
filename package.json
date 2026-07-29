@@ -34,11 +34,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/moradothmanepro-OTTO/kashida.git"
+    "url": "git+https://github.com/Otto-OttoSpace/kashida.git"
   },
-  "homepage": "https://kashida.ottospace.co",
+  "homepage": "https://github.com/Otto-OttoSpace/kashida#readme",
   "bugs": {
-    "url": "https://github.com/moradothmanepro-OTTO/kashida/issues"
+    "url": "https://github.com/Otto-OttoSpace/kashida/issues"
   },
   "engines": {
     "node": ">=18"
