@@ -77,6 +77,6 @@ Part of **[Otto](https://dev.ottospace.co)** — tools that make the AI-built we
 
 ## 💛 Support & commercial use
 
-The Miraat suite is free and open-source (MIT). If it helps you ship correct Arabic/RTL, please consider [sponsoring](https://polar.sh/otto-space) — it funds maintenance and new rules.
+The Miraat suite is free and open-source (MIT). If it helps you ship correct Arabic/RTL, please consider [sponsoring on GitHub](https://github.com/sponsors/Otto-OttoSpace) — it funds maintenance and new rules.
 
-Using it in a commercial product, in CI, or need the private **DGA compliance** rule pack? **[Miraat Pro](https://polar.sh/otto-space)** adds a commercial license, a hosted CI audit that gates PRs ([miraat-action](https://github.com/Otto-OttoSpace/miraat-action)), and priority support.
+Using it in a commercial product, in CI, or need the private **DGA compliance** rule pack? A **Miraat Pro** commercial licence — commercial use, a hosted CI audit that gates PRs ([miraat-action](https://github.com/Otto-OttoSpace/miraat-action)), and priority support — is available. Email **work@ottospace.co** and we'll set you up.
