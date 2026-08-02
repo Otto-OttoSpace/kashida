@@ -18,7 +18,7 @@ npx kashida . --init-rules          # write typography rules for your AI agent
 
 ## Three tiers
 
-1. **static** (default, zero heavy deps, never throws) — AST/PostCSS. Catches `letter-spacing`/`word-spacing`/`tracking-*`, tight `line-height`, tiny sizes, `uppercase`/`capitalize`, Latin-only fonts, **ligature-off** (`font-feature-settings "calt"/"liga"/"rlig"/"init"/"medi"/"fina" 0`, `font-variant-ligatures:none`), **bidi-override**, **vertical writing-mode** on RTL, and a **stray literal ZWNJ** inside a cursive word.
+1. **static** (default, zero heavy deps, never throws) — AST/PostCSS. Catches `letter-spacing`/`word-spacing`/`tracking-*`, tight `line-height`, tiny sizes, `uppercase`/`capitalize`, Latin-only fonts, **ligature-off** (`font-feature-settings "calt"/"liga"/"rlig"/"init"/"medi"/"fina" 0`, `font-variant-ligatures:none`), **bidi-override**, **vertical writing-mode** on RTL, **`word-break:break-all` / `overflow-wrap:anywhere`** that chop cursive joins & conjuncts mid-word, and a **stray literal ZWNJ** inside a cursive word (skipped for Persian/Urdu/Pashto/Kurdish/Sindhi, which use ZWNJ deliberately).
 2. **`--render`** (optional deps `harfbuzzjs` + `fontkit`) — HarfBuzz ground truth: shapes the text and reports **tofu** (a glyph shaped to `.notdef`), **fake-Arabic-font** (a face that does no Arabic joining — normal output == joining-disabled output), and **mark-collision** (a combining mark placed at `dx=0,dy=0`). Ships a bundled reference Arabic face (Amiri).
 3. **`--url`** (optional deps `playwright` + `wawoff2`) — render-time: launches Chromium, waits for webfonts, walks every visible text node, and uses CDP `CSS.getPlatformFontsForNode` to prove the **actual** face the browser used (a Latin family with `glyphCount>0` over Arabic = forced-Latin). Falls back to a curl+shape analysis when Playwright isn't installed.
 
@@ -46,6 +46,7 @@ Detection is parser-verified — **Babel** for JS/TS/JSX/TSX, **PostCSS** for CS
 - **Tight `line-height`** (`leading-none/tight/snug`, `< 1.5`) → crushes tashkeel
 - **Small sizes** (`text-xs/text-sm`, `< 16px`) → Arabic body too small
 - **`text-transform: uppercase`** → meaningless on Arabic (no case), hides bugs
+- **`word-break: break-all` / `overflow-wrap: anywhere`** → chops cursive joins & Indic conjuncts mid-word (gated to cursive/complex scripts — never Hebrew or CJK, where break-all is normal)
 - **Latin-only font stacks** → uses an Arabic-font **allowlist** (Cairo, Tajawal, Almarai, Amiri, IBM Plex Sans Arabic, Noto Sans/Kufi Arabic, Rubik, El Messiri, Changa, any family containing "Arabic", …). It flags a stack only when it names a real Latin family **and** has no Arabic family — so `Inter, Cairo` and `"IBM Plex Sans Arabic", Inter` are clean.
 
 ## Why it only reports
