@@ -9,7 +9,7 @@
   },
   "type": "commonjs",
   "scripts": {
-    "test": "node --test test/run.js"
+    "test": "node --test test/run.js test/font-fix.test.js"
   },
   "keywords": [
     "arabic",
