@@ -13,7 +13,7 @@ inline JSX style objects, and arbitrary Tailwind values (text-[13px], leading-[1
 It reports only — it never edits, because typography is judgment.
 
 ## Use it
-- CLI: `npx github:moradothmanepro-OTTO/kashida .`
+- CLI: `npx github:Otto-OttoSpace/kashida .`
 - MCP: run `kashida-mcp` (tools: kashida_scan, kashida_check_code)
 - AI rules: `kashida --init-rules` writes ARABIC-TYPE-RULES.md
 
@@ -21,4 +21,4 @@ It reports only — it never edits, because typography is judgment.
 No letter-spacing/tracking on Arabic; line-height ≥ 1.5; body Arabic ≥ 16px; no uppercase on
 Arabic; use an Arabic font with a fallback (Cairo / IBM Plex Sans Arabic).
 
-Links: https://github.com/moradothmanepro-OTTO/kashida · https://dev.ottospace.co
+Links: https://github.com/Otto-OttoSpace/kashida · https://dev.ottospace.co
