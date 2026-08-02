@@ -61,13 +61,13 @@ Typography is judgment — a Latin heading may *want* letter-spacing. kashida fl
 
 ## In your AI agent (MCP)
 ```json
-{ "mcpServers": { "kashida": { "command": "npx", "args": ["-y","-p","github:moradothmanepro-OTTO/kashida","kashida-mcp"] } } }
+{ "mcpServers": { "kashida": { "command": "npx", "args": ["-y","-p","github:Otto-OttoSpace/kashida","kashida-mcp"] } } }
 ```
 Tools: `kashida_scan`, `kashida_check_code`.
 
 ## GitHub Action
 ```yaml
-- uses: moradothmanepro-OTTO/kashida@v0.3.0
+- uses: Otto-OttoSpace/kashida@v0.3.0
   with:
     path: .
     check: true   # fail the job on any Arabic-typography issue
