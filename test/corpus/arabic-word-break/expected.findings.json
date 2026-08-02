@@ -1,0 +1,16 @@
+[
+  {
+    "rule": "word-break-cjk-arabic",
+    "sev": "flag",
+    "line": 2,
+    "from": "word-break: break-all",
+    "to": ""
+  },
+  {
+    "rule": "word-break-cjk-arabic",
+    "sev": "flag",
+    "line": 3,
+    "from": "overflow-wrap: anywhere",
+    "to": ""
+  }
+]

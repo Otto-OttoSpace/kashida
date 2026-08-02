@@ -1,0 +1,9 @@
+[
+  {
+    "rule": "zwnj",
+    "sev": "flag",
+    "line": 4,
+    "from": "U+200C (ZWNJ)",
+    "to": ""
+  }
+]
