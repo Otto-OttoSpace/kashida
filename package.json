@@ -1,7 +1,7 @@
 {
   "name": "kashida",
   "version": "0.6.1",
-  "description": "Catch the typography mistakes that break COMPLEX-SCRIPT rendering — Arabic & the RTL-cursive family, Indic, SE-Asian, CJK, Hebrew. Static AST/PostCSS tier (letter/word-spacing, tight leading, tiny size, uppercase, Latin-only fonts, ligature-off, bidi-override, stray ZWNJ), plus optional HarfBuzz `--render` (tofu / fake-Arabic-font / unattached marks) and a live `--url` Chromium tier. Per-family gating so Hebrew/CJK never get a false letter-spacing flag. Report-only, with an MCP server. Part of OttoSpace.",
+  "description": "Catch the typography mistakes that break COMPLEX-SCRIPT rendering \u2014 Arabic & the RTL-cursive family, Indic, SE-Asian, CJK, Hebrew. Static AST/PostCSS tier (letter/word-spacing, tight leading, tiny size, uppercase, Latin-only fonts, ligature-off, bidi-override, stray ZWNJ), plus optional HarfBuzz `--render` (tofu / fake-Arabic-font / unattached marks) and a live `--url` Chromium tier. Per-family gating so Hebrew/CJK never get a false letter-spacing flag. Report-only, with an MCP server. Part of OttoSpace.",
   "bin": {
     "kashida": "bin/kashida.js",
     "arabitype": "bin/kashida.js",
@@ -9,7 +9,7 @@
   },
   "type": "commonjs",
   "scripts": {
-    "test": "node --test test/run.js test/font-fix.test.js"
+    "test": "node --test test/run.js test/font-fix.test.js test/mcp-security.test.js"
   },
   "keywords": [
     "arabic",
@@ -41,7 +41,7 @@
     "url": "https://github.com/Otto-OttoSpace/kashida/issues"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "files": [
     "bin",

@@ -38,7 +38,11 @@ const TOOLS = [
 function callTool(name, args) {
   if (name === 'kashida_scan') return runCli([args.path, '--json']);
   if (name === 'kashida_check_code') {
-    const ext = args.ext && args.ext.startsWith('.') ? args.ext : '.tsx';
+    // `ext` is attacker-controlled and gets joined into a temp path, so accept
+    // only a leading dot followed by alphanumerics (no '/', '\\', '..' or other
+    // separators). Anything else — including `.x/../../etc/passwd` — falls back
+    // to the safe default, preventing an arbitrary-write/-delete path traversal.
+    const ext = typeof args.ext === 'string' && /^\.[A-Za-z0-9]+$/.test(args.ext) ? args.ext : '.tsx';
     const tmp = path.join(os.tmpdir(), `kashida-${Date.now()}-${Math.floor(Math.random() * 1e6)}${ext}`);
     fs.writeFileSync(tmp, args.code);
     const out = runCli([tmp, '--json']);

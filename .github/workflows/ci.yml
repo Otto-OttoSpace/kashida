@@ -6,15 +6,22 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18, 20, 22]
+        # Node 18 reached end-of-life (Apr 2025); engines requires >=20.
+        node-version: [20, 22, 24]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
-      # regression corpus: scan JSON matches expected + FP guards (english-*/fp-* = 0)
-      - run: node --test test/run.js
-      # smoke: the CLI runs and can generate an AI-rules file
-      - run: node bin/kashida.js test/fixtures --json
+      # full suite: regression corpus + font-fix + MCP path-traversal guard
+      - run: npm test
+      # smoke: the CLI runs and emits valid JSON. The fixtures contain deliberate
+      # typography issues, so kashida exits non-zero ("issues found") by design —
+      # validate the JSON output instead of gating on that exit code.
+      - name: smoke - CLI emits valid JSON
+        run: |
+          node bin/kashida.js test/fixtures --json > smoke-out.json || true
+          node -e "JSON.parse(require('fs').readFileSync('smoke-out.json','utf8')); console.log('smoke ok')"
+      # smoke: the CLI can generate an AI-rules file (exits 0)
       - run: node bin/kashida.js test/fixtures --init-rules
