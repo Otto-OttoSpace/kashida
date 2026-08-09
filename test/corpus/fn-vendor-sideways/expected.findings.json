@@ -1,0 +1,16 @@
+[
+  {
+    "rule": "ligature-off",
+    "sev": "flag",
+    "line": 1,
+    "from": "font-feature-settings: \"liga\" 0",
+    "to": ""
+  },
+  {
+    "rule": "vertical-writing",
+    "sev": "flag",
+    "line": 2,
+    "from": "writing-mode: sideways-rl",
+    "to": ""
+  }
+]
