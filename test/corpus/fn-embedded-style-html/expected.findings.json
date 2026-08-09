@@ -1,0 +1,16 @@
+[
+  {
+    "rule": "letter-spacing",
+    "sev": "flag",
+    "line": 3,
+    "from": "letter-spacing: 4px",
+    "to": ""
+  },
+  {
+    "rule": "tight-leading",
+    "sev": "flag",
+    "line": 3,
+    "from": "line-height: 1.1",
+    "to": ""
+  }
+]
