@@ -1,0 +1,9 @@
+[
+  {
+    "rule": "latin-font-stack",
+    "sev": "flag",
+    "line": 1,
+    "from": "\"Rubik\", sans-serif",
+    "to": ""
+  }
+]
