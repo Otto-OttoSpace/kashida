@@ -35,8 +35,21 @@ const TOOLS = [
   }
 ];
 
+// A caller-supplied scan `path` must not be readable as a flag/subcommand
+// (`--init-rules`, `--font-fix`, …) that would hijack the CLI. Reject
+// leading-dash and prefix a bare relative path with `./`.
+function safeScanPath(p) {
+  if (typeof p !== 'string' || !p || p.startsWith('-')) return null;
+  if (!path.isAbsolute(p) && !p.startsWith('./') && !p.startsWith('../')) return './' + p;
+  return p;
+}
+
 function callTool(name, args) {
-  if (name === 'kashida_scan') return runCli([args.path, '--json']);
+  if (name === 'kashida_scan') {
+    const p = safeScanPath(args.path);
+    if (!p) throw new Error('invalid path (must be a file/dir, not a flag or subcommand)');
+    return runCli([p, '--json']);
+  }
   if (name === 'kashida_check_code') {
     // `ext` is attacker-controlled and gets joined into a temp path, so accept
     // only a leading dot followed by alphanumerics (no '/', '\\', '..' or other

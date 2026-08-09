@@ -45,3 +45,18 @@ test('check_code still works with a normal ext', async () => {
   await driveCheckCode('.tsx', 'const a = 1;');
   assert.ok(true, 'a legitimate ext must not crash the server');
 });
+
+// ── regression: a flag/subcommand-shaped scan `path` must not hijack the CLI ──
+test('kashida_scan rejects a flag/subcommand-shaped path', async () => {
+  const drive = (p) => new Promise((resolve) => {
+    const srv = spawn(process.execPath, [MCP], { stdio: ['pipe', 'pipe', 'ignore'] });
+    let out = ''; const done = () => { try { srv.kill(); } catch {} resolve(out); };
+    srv.stdout.on('data', d => { out += d.toString(); if (out.includes('"id":2')) done(); });
+    srv.on('close', () => resolve(out));
+    const s = o => srv.stdin.write(JSON.stringify(o) + '\n');
+    s({ jsonrpc: '2.0', id: 1, method: 'initialize', params: {} });
+    s({ jsonrpc: '2.0', id: 2, method: 'tools/call', params: { name: 'kashida_scan', arguments: { path: p } } });
+    setTimeout(done, 4000);
+  });
+  assert.match(await drive('--init-rules'), /invalid path/, 'a leading-dash path is rejected');
+});
