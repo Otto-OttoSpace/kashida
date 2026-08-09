@@ -57,6 +57,7 @@
   "dependencies": {
     "@babel/parser": "^8.0.4",
     "@babel/traverse": "^8.0.4",
+    "@ottospace/rtl-scripts": "github:Otto-OttoSpace/rtl-scripts#v1.0.0",
     "postcss": "^8.5.23"
   },
   "optionalDependencies": {
