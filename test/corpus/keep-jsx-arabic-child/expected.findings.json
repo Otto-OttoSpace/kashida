@@ -1,0 +1,9 @@
+[
+  {
+    "rule": "letter-spacing",
+    "sev": "flag",
+    "line": 1,
+    "from": "letterSpacing: 2",
+    "to": ""
+  }
+]
