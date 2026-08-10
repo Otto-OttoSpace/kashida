@@ -1,0 +1,23 @@
+[
+  {
+    "rule": "latin-font-stack",
+    "sev": "flag",
+    "line": 2,
+    "from": "font: 13px/1.2 Arial, sans-serif",
+    "to": ""
+  },
+  {
+    "rule": "small-size",
+    "sev": "flag",
+    "line": 2,
+    "from": "font: 13px/1.2 Arial, sans-serif",
+    "to": ""
+  },
+  {
+    "rule": "tight-leading",
+    "sev": "flag",
+    "line": 2,
+    "from": "font: 13px/1.2 Arial, sans-serif",
+    "to": ""
+  }
+]

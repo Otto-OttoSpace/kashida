@@ -1,0 +1,30 @@
+[
+  {
+    "rule": "latin-font-stack",
+    "sev": "flag",
+    "line": 2,
+    "from": "Arial",
+    "to": ""
+  },
+  {
+    "rule": "letter-spacing",
+    "sev": "flag",
+    "line": 2,
+    "from": "letter-spacing: 2px",
+    "to": ""
+  },
+  {
+    "rule": "latin-font-stack",
+    "sev": "flag",
+    "line": 3,
+    "from": "font: 12px Georgia",
+    "to": ""
+  },
+  {
+    "rule": "small-size",
+    "sev": "flag",
+    "line": 3,
+    "from": "font: 12px Georgia",
+    "to": ""
+  }
+]
