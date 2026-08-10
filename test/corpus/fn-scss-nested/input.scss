@@ -1,0 +1,6 @@
+// SCSS the default CSS parser rejects (# interpolation, &, @include)
+$i: 1;
+.card:lang(ar) {
+  &:hover { color: red; }
+  .label-#{$i} { font-family: Helvetica, sans-serif; letter-spacing: 3px; }
+}

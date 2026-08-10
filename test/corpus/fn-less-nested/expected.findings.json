@@ -1,0 +1,9 @@
+[
+  {
+    "rule": "latin-font-stack",
+    "sev": "flag",
+    "line": 3,
+    "from": "Arial, sans-serif",
+    "to": ""
+  }
+]

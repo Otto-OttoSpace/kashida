@@ -1,0 +1,16 @@
+[
+  {
+    "rule": "latin-font-stack",
+    "sev": "flag",
+    "line": 5,
+    "from": "Helvetica, sans-serif",
+    "to": ""
+  },
+  {
+    "rule": "letter-spacing",
+    "sev": "flag",
+    "line": 5,
+    "from": "letter-spacing: 3px",
+    "to": ""
+  }
+]
