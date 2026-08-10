@@ -58,7 +58,7 @@ function callTool(name, args) {
     const ext = typeof args.ext === 'string' && /^\.[A-Za-z0-9]+$/.test(args.ext) ? args.ext : '.tsx';
     const tmp = path.join(os.tmpdir(), `kashida-${Date.now()}-${Math.floor(Math.random() * 1e6)}${ext}`);
     fs.writeFileSync(tmp, args.code);
-    const out = runCli([tmp, '--json']);
+    const out = runCli([tmp, '--json']).split(tmp).join('<snippet>');
     try { fs.unlinkSync(tmp); } catch {}
     return out;
   }
