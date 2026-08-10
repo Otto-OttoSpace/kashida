@@ -1,0 +1,3 @@
+/* Arabic-capable stack at a fine size + relaxed leading — nothing to flag */
+.hero:lang(ar) { font: 18px/1.6 "IBM Plex Sans Arabic", sans-serif; }
+.sys { font: caption; }
