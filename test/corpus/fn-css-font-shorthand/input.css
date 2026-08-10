@@ -1,0 +1,3 @@
+/* the `font` shorthand packs size / line-height / family together */
+.headline:lang(ar) { font: 13px/1.2 Arial, sans-serif; }
+.ok:lang(ar) { font: 16px "Cairo", sans-serif; }
