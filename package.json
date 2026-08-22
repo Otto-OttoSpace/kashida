@@ -1,6 +1,6 @@
 {
   "name": "kashida",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Catch the typography mistakes that break COMPLEX-SCRIPT rendering — Arabic & the RTL-cursive family, Indic, SE-Asian, CJK, Hebrew. Static AST/PostCSS tier (letter/word-spacing, tight leading, tiny size, uppercase, Latin-only fonts, ligature-off, bidi-override, stray ZWNJ), plus optional HarfBuzz `--render` (tofu / fake-Arabic-font / unattached marks) and a live `--url` Chromium tier. Per-family gating so Hebrew/CJK never get a false letter-spacing flag. Report-only, with an MCP server. Part of OttoSpace.",
   "bin": {
     "kashida": "bin/kashida.js",
@@ -57,7 +57,7 @@
   "dependencies": {
     "@babel/parser": "^8.0.4",
     "@babel/traverse": "^8.0.4",
-    "@ottospace/rtl-scripts": "git+https://github.com/Otto-OttoSpace/rtl-scripts.git#d8a271fbe3a8ccc2df9dd5ac1f20552dada35f94",
+    "@ottospace/rtl-scripts": "^1.0.0",
     "postcss": "^8.5.23",
     "postcss-less": "^6.0.0",
     "postcss-scss": "^4.0.9"
